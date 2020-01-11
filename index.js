@@ -42,8 +42,6 @@ app
         })
     },
     (err, req, res, next) => {
-      console.error(err)
-
       res
         .status(422)
         .json({
