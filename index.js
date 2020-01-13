@@ -7,9 +7,12 @@ const data = require('./data.json')
 
 const app = express()
 
+const KEY_TO_SEARCH = process.env.KEYS_TO_SEARCH || 'title'
+const RESULTS_LIMIT = process.env.RESULTS_LIMIT || 5
+
 const fuse = new Fuse(data, {
   distance: 100,
-  keys: ['title'],
+  keys: [KEY_TO_SEARCH],
   location: 0,
   maxPatternLength: 32,
   minMatchCharLength: 1,
@@ -28,7 +31,7 @@ app
     (req, res, next) => {
       const query = req.params.q || ''
 
-      const results = fuse.search(query)
+      const results = fuse.search(query, RESULTS_LIMIT)
 
       if (!Array.isArray(results) || !results.length) {
         return res
