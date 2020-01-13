@@ -1,0 +1,11 @@
+{
+  "name": "poc-search",
+  "repository": "https://github.com/MikeGertrudes/poc-search.git",
+  "environments": {
+    "test": {
+      "scripts": {
+        "test": "npm run ci"
+      }
+    }
+  }
+}
