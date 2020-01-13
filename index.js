@@ -19,7 +19,7 @@ const fuse = new Fuse(data, {
 
 app
   .set('port', (process.env.PORT || 8080))
-  .set('host', (process.env.HOST || 'localhost'))
+  .set('host', (process.env.HOST || '0.0.0.0'))
   .use(compression())
   .get('/v1/search/:q',
     (req, res, next) => {
