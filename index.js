@@ -1,13 +1,12 @@
 const express = require('express')
 const cors = require('cors')
 const compression = require('compression')
+const isEmpty = require('lodash/isEmpty')
 const Fuse = require('fuse.js')
 
 const data = require('./data.json')
 
-const app = express()
-
-const KEY_TO_SEARCH = process.env.KEYS_TO_SEARCH || 'title'
+const KEY_TO_SEARCH = process.env.KEY_TO_SEARCH || 'title'
 const RESULTS_LIMIT = process.env.RESULTS_LIMIT || 5
 
 const fuse = new Fuse(data, {
@@ -21,6 +20,8 @@ const fuse = new Fuse(data, {
   tokenize: true
 })
 
+const app = express()
+
 app
   .set('port', (process.env.PORT || 8080))
   .set('host', (process.env.HOST || '0.0.0.0'))
@@ -33,7 +34,7 @@ app
 
       const results = fuse.search(query, RESULTS_LIMIT)
 
-      if (!Array.isArray(results) || !results.length) {
+      if (isEmpty(results)) {
         return res
           .status(400)
           .json({
