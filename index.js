@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const compression = require('compression')
 const Fuse = require('fuse.js')
 
@@ -20,7 +21,9 @@ const fuse = new Fuse(data, {
 app
   .set('port', (process.env.PORT || 8080))
   .set('host', (process.env.HOST || '0.0.0.0'))
+  .disable('x-powered-by')
   .use(compression())
+  .use(cors())
   .get('/v1/search/:q',
     (req, res, next) => {
       const query = req.params.q || ''
